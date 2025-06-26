@@ -1,0 +1,32 @@
+{{- if .Values.redis.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "canine.fullname" . }}-redis
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    {{- include "canine.labels" . | nindent 4 }}
+    app.kubernetes.io/component: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "canine.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: redis
+  template:
+    metadata:
+      labels:
+        {{- include "canine.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: redis
+    spec:
+      containers:
+        - name: redis
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6379
+          {{- if .Values.redis.resources }}
+          resources:
+            {{- toYaml .Values.redis.resources | nindent 12 }}
+          {{- end }}
+{{- end }}

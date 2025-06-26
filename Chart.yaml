@@ -1,0 +1,15 @@
+apiVersion: v2
+name: canine
+description: A Helm chart for Canine application with PostgreSQL and Redis
+type: application
+version: 0.1.0
+appVersion: "latest"
+keywords:
+  - canine
+  - web-application
+  - postgresql
+  - redis
+home: https://github.com/czhu12/canine
+maintainers:
+  - name: canine-team
+    email: support@canine.app

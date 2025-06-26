@@ -1,0 +1,83 @@
+# Default values for canine chart
+replicaCount: 1
+
+image:
+  repository: ghcr.io/czhu12/canine
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Application configuration
+app:
+  port: 3000
+  auxPort: 3200
+  host: "http://localhost:3000"
+  localMode: true
+  username: "canine"
+  password: "test1234h"
+
+# Service configuration
+service:
+  type: NodePort
+  port: 3000
+  auxPort: 3200
+  nodePort: 30001
+  auxNodePort: 30002
+
+# Resources configuration
+resources:
+  requests:
+    cpu: "1"
+    memory: "512Mi"
+  limits:
+    cpu: "2"
+    memory: "2Gi"
+
+# PostgreSQL configuration
+postgresql:
+  enabled: true
+  image:
+    repository: postgres
+    tag: "16"
+  auth:
+    username: "postgres"
+    password: "password"
+    databases: "canine_production,canine_development"
+  persistence:
+    enabled: true
+    storageClass: "local-path"
+    size: 1Gi
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+
+# Redis configuration
+redis:
+  enabled: true
+  image:
+    repository: redis
+    tag: "alpine"
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+
+# Volume mounts
+volumes:
+  dockerSocket:
+    enabled: true
+    hostPath: "/var/run/docker.sock"
+
+# Namespace
+namespace:
+  create: true
+  name: "canine"
