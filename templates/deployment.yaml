@@ -45,7 +45,7 @@ spec:
           {{- if .Values.volumes.dockerSocket.enabled }}
           volumeMounts:
             - name: dockersock
-              mountPath: /var/run/docker.sock
+              mountPath: {{ .Values.volumes.dockerSocket.hostPath }}
           {{- end }}
           livenessProbe:
             tcpSocket:
