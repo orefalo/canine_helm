@@ -45,19 +45,17 @@ spec:
           {{- if .Values.volumes.dockerSocket.enabled }}
           volumeMounts:
             - name: dockersock
-              mountPath: /var/run/docker.sock
+              mountPath: {{ .Values.volumes.dockerSocket.hostPath }}
           {{- end }}
           livenessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
             initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 5
             failureThreshold: 3
           readinessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
             initialDelaySeconds: 10
             periodSeconds: 5
