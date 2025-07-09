@@ -17,6 +17,7 @@ app:
   localMode: true
   username: "canine"
   password: "test1234h"
+  secretKey: "mysecretkey"
 
 # Service configuration
 service:
